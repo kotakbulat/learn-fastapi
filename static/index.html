@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FastAPI Portfolio Demo</title>
+    <style>
+        body { font-family: sans-serif; line-height: 1.6; padding: 20px; max-width: 800px; margin: auto; }
+        h1, h2 { color: #333; }
+        code { background-color: #f4f4f4; padding: 2px 5px; border-radius: 3px; }
+        a { color: #007bff; }
+        ul { padding-left: 20px; }
+        li { margin-bottom: 10px; }
+    </style>
+</head>
+<body>
+    <h1>Welcome to the Simple FastAPI Portfolio API Demo!</h1>
+    <p>This application demonstrates the essential features of FastAPI.</p>
+
+    <h2>Explore the API:</h2>
+    <ul>
+        <li>
+            <strong>Interactive API Docs (Swagger UI):</strong>
+            <a href="/docs" target="_blank">/docs</a> - Try out the API endpoints directly from your browser.
+        </li>
+        <li>
+            <strong>Alternative API Docs (ReDoc):</strong>
+            <a href="/redoc" target="_blank">/redoc</a> - View alternative, more static documentation.
+        </li>
+    </ul>
+
+    <h2>FastAPI Features Demonstrated:</h2>
+    <p>Interact with the API via the <a href="/docs" target="_blank">/docs</a> page to see these in action:</p>
+    <ul>
+        <li>
+            <strong>Automatic Docs:</strong> Generated automatically from your code (check <code>/docs</code> and <code>/redoc</code>). Docstrings and type hints contribute to this.
+        </li>
+        <li>
+            <strong>Path Parameters:</strong> Used in <code>GET /portfolio/projects/{project_id}</code> to identify a specific project. Try fetching project ID 1 or 2.
+        </li>
+        <li>
+            <strong>Query Parameters:</strong> Used in <code>GET /portfolio/projects</code> for pagination (e.g., <code>/portfolio/projects?skip=1&limit=1</code>). Try changing the <code>skip</code> and <code>limit</code> values in the docs.
+        </li>
+        <li>
+            <strong>Request Body & Pydantic Models:</strong> Used in <code>POST /portfolio/projects</code> to create a new project. The API expects a JSON body matching the <code>ProjectCreate</code> schema defined in <code>models.py</code>. Try creating a project via the docs - invalid data will result in a 422 error.
+        </li>
+         <li>
+            <strong>Response Models:</strong> Used in all endpoints (e.g., <code>response_model=models.Project</code>) to define the exact structure and types of the JSON response, ensuring consistency and filtering sensitive data if needed. Observe the structured JSON output in the docs.
+        </li>
+        <li>
+            <strong>Data Validation:</strong> Pydantic models (<code>models.py</code>) automatically validate path parameters, query parameters, and request bodies based on type hints and constraints (like <code>min_length</code>, <code>gt=0</code>). Try providing invalid data (e.g., a short description when creating a project) to see the validation error response.
+        </li>
+        <li>
+            <strong>Dependency Injection:</strong> A simple dependency (<code>get_common_parameters</code>) is defined in <code>routers/portfolio.py</code> and shown how it *could* be injected using <code>Depends</code> (though not actively used in the final logic here for simplicity). This is crucial for managing database connections, authentication, etc.
+        </li>
+        <li>
+            <strong>Async Support:</strong> Route handlers are defined with <code>async def</code>, allowing FastAPI to handle requests concurrently for better performance, especially with I/O operations.
+        </li>
+         <li>
+            <strong>Error Handling:</strong> <code>HTTPException</code> is used in <code>GET /portfolio/projects/{project_id}</code> to return a 404 Not Found error if the ID doesn't exist. Automatic 422 Unprocessable Entity errors are returned for validation failures.
+        </li>
+        <li>
+            <strong>APIRouter:</strong> The endpoints are organized using <code>APIRouter</code> in <code>routers/portfolio.py</code>, making the codebase modular. All routes are prefixed with <code>/portfolio</code>.
+        </li>
+         <li>
+            <strong>Static Files:</strong> This HTML page (<code>index.html</code>) is served as a static file.
+        </li>
+
+    </ul>
+
+</body>
+</html>
